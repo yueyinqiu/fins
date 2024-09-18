@@ -6,7 +6,7 @@ import torch
 from torch.utils.data import Dataset
 import pyloudnorm as pyln
 
-from fins.utils.audio import load_audio, crop_rir
+from utils.audio import load_audio, crop_rir
 
 
 class ReverbDataset(Dataset):

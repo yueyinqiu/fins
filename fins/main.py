@@ -3,11 +3,11 @@ import argparse
 import torch
 from torch.utils.data import DataLoader
 
-from fins.data.process_data import load_rir_dataset, load_speech_dataset
-from fins.trainer import Trainer
-from fins.dataloader import ReverbDataset
-from fins.model import FilteredNoiseShaper
-from fins.utils.utils import load_config
+from data.process_data import load_rir_dataset, load_speech_dataset
+from trainer import Trainer
+from dataloader import ReverbDataset
+from model import FilteredNoiseShaper
+from utils.utils import load_config
 
 
 def main(args):
@@ -17,7 +17,7 @@ def main(args):
     print(config)
 
     if torch.cuda.is_available():
-        args.device = torch.device("cuda")
+        args.device = torch.device("cuda", 0)
         torch.cuda.set_device(args.device)
     else:
         args.device = "cpu"

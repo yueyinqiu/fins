@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from torch.nn.utils import spectral_norm
 
-from fins.utils.audio import (
+from utils.audio import (
     get_octave_filters,
 )
 
@@ -290,8 +290,8 @@ class FilteredNoiseShaper(nn.Module):
         return rir
 
     if __name__ == "__main__":
-        from fins.utils.utils import load_config
-        from fins.model import FilteredNoiseShaper
+        from utils.utils import load_config
+        from model import FilteredNoiseShaper
 
         batch_size = 1
         input_size = 131072

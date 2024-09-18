@@ -6,8 +6,8 @@ from torch.utils.tensorboard import SummaryWriter
 from torch.nn.utils import clip_grad_norm_
 import matplotlib.pyplot as plt
 
-from fins.loss import MultiResolutionSTFTLoss
-from fins.utils.audio import batch_convolution, add_noise_batch, audio_normalize_batch
+from loss import MultiResolutionSTFTLoss
+from utils.audio import batch_convolution, add_noise_batch, audio_normalize_batch
 
 torch.autograd.set_detect_anomaly(True)
 
@@ -158,7 +158,7 @@ class Trainer:
 
                 self.optimizer.step()
 
-                if i % 10 == 0:
+                if i % 1 == 0:
                     print(
                         "epoch",
                         epoch,

@@ -24,12 +24,12 @@ def load_bird(path_to_dataset):
 
 
 def load_rir_dataset():
-    train_files, valid_files, test_files = load_bird("./dataset/BIRD")
+    train_files, valid_files, test_files = load_bird("/mnt/d/BIRD fold01")
     return train_files, valid_files, test_files
 
 
 def load_speech_dataset():
-    speech_files = list(Path("./dataset/DAPS").rglob("*.wav"))
+    speech_files = list(Path("/mnt/d/daps/cleanraw").rglob("*.wav"))
     random.shuffle(speech_files)
 
     train_files, valid_files, test_files = split(speech_files, 0.7, 0.1)
