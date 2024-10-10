@@ -1,3 +1,5 @@
+# python 3.11
+
 colorednoise==2.2.0
 easydict==1.10
 fft_conv_pytorch==1.2.0
@@ -8,3 +10,7 @@ pyloudnorm==0.1.1
 PyYAML==6.0.1
 scipy==1.11.3
 torch==2.0.1
+
+tensorboard
+
+# conda install ffmpeg
