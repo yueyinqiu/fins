@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from torch.nn.utils import spectral_norm
+from torch.nn.utils import spectral_norm  # type: ignore
 
 from utils.audio import (
     get_octave_filters,
@@ -280,6 +280,7 @@ class FilteredNoiseShaper(nn.Module):
         late_part = filtered_noise * late_mask
 
         # Zero out sample beyond 2400 for direct early part
+        self.mask: torch.Tensor
         direct_early = torch.mul(direct_early, self.mask)
         # Concat direct,early with late and perform convolution
         rir = torch.cat((direct_early, late_part), 1)

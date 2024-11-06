@@ -1,4 +1,3 @@
-import audioread
+import torch
 
-b = audioread.available_backends()
-print(b)
+print(torch.cuda.is_available())

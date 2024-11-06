@@ -13,7 +13,7 @@ def load_audio(path, target_sr: int = 48000, mono=False, offset=0.0, duration=No
     y, orig_sr = librosa.load(path, sr=None, mono=mono, offset=offset, duration=duration)
 
     if target_sr:
-        y = resample(y, orig_sr=orig_sr, target_sr=target_sr)
+        y = resample(y, orig_sr=int(orig_sr), target_sr=target_sr)
 
     return np.atleast_2d(y)
 
@@ -58,14 +58,14 @@ def get_octave_filters():
         fir = scipy.signal.firwin(
             1023,
             np.array([low, high]),
-            pass_zero='bandpass',
+            pass_zero='bandpass',  # type: ignore
             window='hamming',
             fs=48000,
         )
         firs.append(fir)
 
-    firs = np.array(firs)
-    firs = np.expand_dims(firs, 1)
+    firs_np = np.array(firs)
+    firs_np = np.expand_dims(firs_np, 1)
     return firs
 
 
@@ -131,13 +131,13 @@ def rms_normalize(sig: np.ndarray, rms_level=0.1):
     return y
 
 
-def rms_normalize_batch(sig: torch.tensor, rms_level=0.1):
+def rms_normalize_batch(sig: torch.Tensor, rms_level=0.1):
     """
     sig : shape=(batch, channel, signal_length)
     """
     # linear rms level and scaling factor
     # r = 10 ** (rms_level / 10.0)
-    a = torch.sqrt((sig.size(2) * rms_level**2) / (torch.sum(sig**2, dim=2, keepdims=True) + 1e-7))
+    a = torch.sqrt((sig.size(2) * rms_level**2) / (torch.sum(sig**2, dim=2, keepdim=True) + 1e-7))
     # normalize
     y = sig * a
 

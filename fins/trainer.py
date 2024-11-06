@@ -2,14 +2,14 @@ import os
 from datetime import datetime
 import torch
 import torch.nn.functional as F
-from torch.utils.tensorboard import SummaryWriter
-from torch.nn.utils import clip_grad_norm_
+from torch.utils.tensorboard import SummaryWriter  # type: ignore
+from torch.nn.utils import clip_grad_norm_  # type: ignore
 import matplotlib.pyplot as plt
 
 from loss import MultiResolutionSTFTLoss
 from utils.audio import batch_convolution, add_noise_batch, audio_normalize_batch
 
-torch.autograd.set_detect_anomaly(True)
+torch.autograd.set_detect_anomaly(True)  # type: ignore
 
 
 class Trainer:
@@ -122,6 +122,11 @@ class Trainer:
         )
 
     def train(self):
+        total_loss = torch.tensor(0.0)
+        stft_loss = torch.tensor(0.0)
+        sc_loss = 0.0
+        mag_loss = 0.0
+
         for epoch in range(self.args.resume_step, self.config.num_epochs):
             self.model.train()
 
@@ -142,7 +147,7 @@ class Trainer:
                     reverberated_source_with_noise, batch_stochastic_noise, batch_noise_condition
                 )
 
-                total_loss = 0.0
+                total_loss = torch.tensor(0.0)
 
                 # Compute loss
                 stft_loss_dict = self.stft_loss_fn(predicted_rir, rir)

@@ -16,7 +16,7 @@ def split(files, train_ratio, valid_ratio):
 
 
 def load_bird(path_to_dataset):
-    rir_files = list(Path(path_to_dataset).rglob("*.flac"))[:500]
+    rir_files = list(Path(path_to_dataset).rglob("*.flac"))
     random.shuffle(rir_files)
 
     train_files, valid_files, test_files = split(rir_files, 0.7, 0.1)
@@ -31,7 +31,7 @@ def load_rir_dataset():
 
 def load_speech_dataset():
     speech_files = list(Path(
-        "/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/data/raw/ears").rglob("*.wav"))[:500]
+        "/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/data/raw/ears").rglob("*.wav"))
     random.shuffle(speech_files)
 
     train_files, valid_files, test_files = split(speech_files, 0.7, 0.1)
