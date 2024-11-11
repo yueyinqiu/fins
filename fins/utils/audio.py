@@ -66,7 +66,7 @@ def get_octave_filters():
 
     firs_np = np.array(firs)
     firs_np = np.expand_dims(firs_np, 1)
-    return firs
+    return firs_np
 
 
 def batch_convolution(signal, filter):
