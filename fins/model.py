@@ -182,14 +182,20 @@ class Decoder(nn.Module):
         super(Decoder, self).__init__()
 
         self.preprocess = nn.Conv1d(1, 512, kernel_size=15, padding=7)
+
+        # TODO: 这玩意要根据 sr 和长度变化的
         self.blocks = nn.ModuleList(
             [
                 DecoderBlock(512, 512, 1, cond_length),
                 DecoderBlock(512, 512, 1, cond_length),
-                DecoderBlock(512, 256, 2, cond_length),
+
+                DecoderBlock(512, 256, 1, cond_length),
+
                 DecoderBlock(256, 256, 2, cond_length),
                 DecoderBlock(256, 256, 2, cond_length),
-                DecoderBlock(256, 128, 3, cond_length),
+
+                DecoderBlock(256, 128, 2, cond_length),
+
                 DecoderBlock(128, 64, 5, cond_length),
             ]
         )
@@ -294,6 +300,7 @@ class FilteredNoiseShaper(nn.Module):
         from utils.utils import load_config
         from model import FilteredNoiseShaper
 
+        # TODO: should load from config
         batch_size = 1
         input_size = 131072
         noise_size = 16

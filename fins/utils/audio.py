@@ -6,21 +6,17 @@ from fft_conv_pytorch import fft_conv
 import librosa
 
 
-def load_audio(path, target_sr: int = 48000, mono=False, offset=0.0, duration=None) -> np.ndarray:
+def load_audio(path, target_sr: int, mono=False, offset=0.0, duration=None) -> np.ndarray:
     """
     return y : shape=(n_channels, n_samples)
     """
-    y, orig_sr = librosa.load(path, sr=None, mono=mono, offset=offset, duration=duration)
-
-    if target_sr:
-        y = resample(y, orig_sr=int(orig_sr), target_sr=target_sr)
-
+    y, _ = librosa.load(path, 
+                        sr=target_sr, 
+                        mono=mono, 
+                        offset=offset, 
+                        duration=duration, 
+                        res_type="polyphase")
     return np.atleast_2d(y)
-
-
-def resample(signal: np.ndarray, orig_sr: int, target_sr: int, **kwargs) -> np.ndarray:
-    """signal: (N,) or (num_channel, N)"""
-    return librosa.resample(y=signal, orig_sr=orig_sr, target_sr=target_sr, res_type="polyphase", **kwargs)
 
 
 def crop_rir(rir, target_length):
@@ -41,6 +37,8 @@ def get_octave_filters():
     Return
         firs : shape = (10, 1, 1023)
     """
+    # TODO: 这个是否要随着 sr 修改？它好像只涉及到参数的初始化
+
     f_bounds = []
     f_bounds.append([22.3, 44.5])
     f_bounds.append([44.5, 88.4])

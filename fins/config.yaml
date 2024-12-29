@@ -1,14 +1,11 @@
-sample_rate: &sr 48000 
+sample_rate: &sr 16000 
 
 dataset:
   params:
     sr: *sr
-    input_duration: 2.74
-    input_length : &input_length 131072
+    input_length : &input_length 43690
     rir_duration: &rir_duration 1.0
-    direct_delay : 100
     peak_norm_value : &peak_norm_value 0.5
-    source_norm_value : -25.0
 
 model:
   name: "model.FilteredNoiseShaper"
@@ -18,7 +15,7 @@ model:
     sr: *sr
     rir_duration: *rir_duration
     input_length : *input_length
-    early_length : &early_length 2400
+    early_length : &early_length 800
     decoder_input_length : 400
     noise_condition_length : &noise_condition_length 16
     z_size : 128

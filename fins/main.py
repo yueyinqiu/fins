@@ -21,6 +21,7 @@ def main(args):
         torch.cuda.set_device(args.device)
     else:
         args.device = "cpu"
+    print(args.device)
 
     train_rir_list, valid_rir_list, test_rir_list = load_rir_dataset()
     train_source_list, valid_source_list, test_source_list = load_speech_dataset()
