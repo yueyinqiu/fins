@@ -165,12 +165,14 @@ class Trainer:
 
                 if i % 1 == 0:
                     print(
+                        "time",
+                        datetime.now().strftime('%y%m%d-%H%M%S'),
                         "epoch",
                         epoch,
                         "batch",
                         i,
                         "total loss",
-                        stft_loss.item(),
+                        total_loss.item(),
                     )
 
             # Validate
