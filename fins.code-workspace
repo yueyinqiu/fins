@@ -1,4 +1,15 @@
 {
+	"settings": {
+		"files.autoSave": "afterDelay",
+		"files.exclude": {
+			"**/__pycache__": true
+		},
+		"files.watcherExclude": {
+			"data": true,
+			"checkpoints": true,
+			".slurm": true
+		}
+	},
 	"folders": [
 		{
 			"path": "."

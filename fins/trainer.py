@@ -310,3 +310,11 @@ class Trainer:
             )
 
         self.writer.flush()
+
+    def plot_eval(self, epoch: int = 1000):
+        self.model.eval()
+        with torch.no_grad():
+            for nth_batch, batch in enumerate(self.valid_data):
+                print("nth batch", nth_batch)
+                self.plot(batch, nth_batch, epoch)
+        self.model.train()
