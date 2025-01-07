@@ -25,23 +25,12 @@ def main(args):
         args.device = "cpu"
     print(args.device)
 
-    train_rir_list, valid_rir_list, test_rir_list = load_rir_dataset()
-    train_source_list, valid_source_list, test_source_list = load_speech_dataset()
-
     # load dataset
     dataset = ReverbDataset(
         ["/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/.gitignored/eval/rir.wav"], 
         ["/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/.gitignored/eval/speech.wav"],
         config.dataset.params, 
-        use_noise=True)
-
-    train_dataloader = DataLoader(
-        dataset,
-        batch_size=1,
-        shuffle=True,
-        drop_last=True,
-        num_workers=config.train.params.num_workers,
-    )
+        use_noise=False)
 
     valid_dataloader = DataLoader(
         dataset,
@@ -55,7 +44,7 @@ def main(args):
     model = FilteredNoiseShaper(config.model.params)
 
     # run trainer
-    trainer = Trainer(model, train_dataloader, valid_dataloader, config.train.params, config.eval.params, args)
+    trainer = Trainer(model, valid_dataloader, valid_dataloader, config.train.params, config.eval.params, args)
 
     trainer.plot_eval()
 

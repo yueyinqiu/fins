@@ -78,13 +78,17 @@ class ReverbDataset(Dataset):
 
         return cropped_rir
 
-    def _load_and_pad(self, audio_f, offset, duration, target_length):
+    def _load_and_pad(self, audio_f, offset, target_length):
         """
         audio_length : length of audio file in samples
         target_length : target length in samples
         """
 
-        audio = load_audio(audio_f, target_sr=self.config.sr, mono=True, offset=offset, duration=duration)
+        audio = load_audio(audio_f, 
+                           target_sr=self.config.sr, 
+                           mono=True, 
+                           offset=offset, 
+                           duration=(self.config.input_length + 100) / self.config.sr)
         # audio = audio[0:1]  # take the first channel
 
         # remove DC components
@@ -103,14 +107,14 @@ class ReverbDataset(Dataset):
 
     def _get_source(self):
         source_file = random.choice(self.source_files)
-        source = self._load_and_pad(source_file, offset=0, duration=3.0, target_length=self.input_signal_length)
+        source = self._load_and_pad(source_file, offset=0, target_length=self.input_signal_length)
 
         # Remove empty
         rms = np.sqrt(np.mean(source**2))
         while rms < 0.001:
             # Re select segment
             source_file = random.choice(self.source_files)
-            source = self._load_and_pad(source_file, offset=0, duration=3.0, target_length=self.input_signal_length)
+            source = self._load_and_pad(source_file, offset=0, target_length=self.input_signal_length)
             rms = np.sqrt(np.mean(source**2))
 
         # Manage source loudness
