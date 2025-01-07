@@ -3,7 +3,7 @@ sample_rate: &sr 16000
 dataset:
   params:
     sr: *sr
-    input_length : &input_length 43690
+    input_length : &input_length 80000
     rir_duration: &rir_duration 1.0
     peak_norm_value : &peak_norm_value 0.5
 
