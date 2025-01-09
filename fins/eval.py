@@ -27,8 +27,8 @@ def main(args):
 
     # load dataset
     dataset = ReverbDataset(
-        ["/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/.gitignored/eval/rir.wav"], 
-        ["/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/.gitignored/eval/speech.wav"],
+        ["/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/checkpoints/fins_load_pretrained_ok/eval/rir.wav"], 
+        ["/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/checkpoints/fins_load_pretrained_ok/eval/speech.wav"],
         config.dataset.params, 
         use_noise=False)
 
