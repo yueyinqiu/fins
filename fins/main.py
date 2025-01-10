@@ -26,9 +26,13 @@ def main(args):
     train_rir_list, valid_rir_list, test_rir_list = load_rir_dataset()
     train_source_list, valid_source_list, test_source_list = load_speech_dataset()
 
+    import csfile
+    train_rir_list = csfile.read_all_lines("/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/data/train_rir.txt")
+    train_source_list = csfile.read_all_lines("/share/home/tj13070/yueyinqiu/Ricbe--RirBlindEstimation/data/train_speech.txt")
+
     # load dataset
-    train_dataset = ReverbDataset(train_rir_list, train_source_list, config.dataset.params, use_noise=True)
-    valid_dataset = ReverbDataset(valid_rir_list, valid_source_list, config.dataset.params, use_noise=True)
+    train_dataset = ReverbDataset(train_rir_list, train_source_list, config.dataset.params, use_noise=False)
+    valid_dataset = ReverbDataset(valid_rir_list, valid_source_list, config.dataset.params, use_noise=False)
 
     train_dataloader = DataLoader(
         train_dataset,

@@ -6,16 +6,21 @@ from fft_conv_pytorch import fft_conv
 import librosa
 
 
-def load_audio(path, target_sr: int, mono=False, offset=0.0, duration=None) -> np.ndarray:
+def load_audio(path: str, target_sr: int, mono=False, offset=0.0, duration=None) -> np.ndarray:
     """
     return y : shape=(n_channels, n_samples)
     """
-    y, _ = librosa.load(path, 
-                        sr=target_sr, 
-                        mono=mono, 
-                        offset=offset, 
-                        duration=duration, 
-                        res_type="polyphase")
+    if path.endswith(".pt"):
+        assert target_sr == 16000
+        tensor = torch.load(path, map_location=torch.device("cpu"), weights_only=True)
+        y = tensor.numpy()
+    else:
+        y, _ = librosa.load(path, 
+                            sr=target_sr, 
+                            mono=mono, 
+                            offset=offset, 
+                            duration=duration, 
+                            res_type="polyphase")
     return np.atleast_2d(y)
 
 
